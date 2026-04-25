@@ -1,0 +1,11 @@
+.env
+__pycache__/
+.streamlit/
+vector_store/
+cloned_repo/
+conversation_log.jsonl
+*.pyc
+.DS_Store
+.venv/
+venv/
+env/
