@@ -85,7 +85,3 @@ codebase-rag-assistant/
 ```
 
 ---
-
-## 📝 License
-
-MIT
