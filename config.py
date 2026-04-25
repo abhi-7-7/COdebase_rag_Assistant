@@ -26,7 +26,11 @@ TOP_K = 5
 
 # ── LLM via Groq ────────────────────────────────────────────────────────────
 GROQ_MODEL = "llama-3.1-8b-instant"
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+try:
+    import streamlit as st
+    GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY", ""))
+except Exception:
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 # ── File filtering ───────────────────────────────────────────────────────────
 SUPPORTED_EXTENSIONS = {
