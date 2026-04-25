@@ -4,6 +4,8 @@ langchain-groq
 langchain-huggingface
 faiss-cpu
 sentence-transformers
+torch
+torchvision
 streamlit
 gitpython
 python-dotenv
