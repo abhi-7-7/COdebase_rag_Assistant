@@ -5,6 +5,7 @@ with sliding-window memory and MMR retrieval.
 """
 
 import os
+import re
 
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferWindowMemory
@@ -33,6 +34,7 @@ Rules:
    (e.g. "what is the weather?", "tell me a joke"), reply with a single line:
    "⚠️ Not related to the codebase — please ask about the project's code."
 6. Keep answers clear, structured, and concise.
+7. At the very end of your answer, include a single line: "Confidence Score: [X]%" where X is your confidence (0-100) that the answer is accurate based ONLY on the provided context. If you are unsure or the context is partial, reduce the score accordingly.
 
 Context:
 {context}
@@ -90,18 +92,22 @@ def build_chain(vector_store):
 
 # ── Query helper ─────────────────────────────────────────────────────────────
 
-def ask(chain, question: str) -> tuple[str, list[dict]]:
+def ask(chain, question: str):
     """
-    Invoke the chain and return a deduplicated answer + sources.
+    Query the chain and return the answer text and source metadata.
 
     Returns
     -------
-    tuple : (answer_text, list of source dicts)
+    tuple : (answer_text, list of source dicts, confidence_score)
         Each source dict: {"file", "filename", "extension", "snippet"}
     """
     result = chain.invoke({"question": question})
 
     answer = result["answer"]
+    
+    # Extract confidence score if present
+    score_match = re.search(r"Confidence Score:\s*(\d+)%", answer)
+    score = int(score_match.group(1)) if score_match else None
 
     # Deduplicate source documents by file path
     seen = set()
@@ -119,4 +125,4 @@ def ask(chain, question: str) -> tuple[str, list[dict]]:
                 }
             )
 
-    return answer, sources
+    return answer, sources, score

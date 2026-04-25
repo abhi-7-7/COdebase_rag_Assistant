@@ -11,7 +11,7 @@ import time
 from streamlit.runtime.scriptrunner import add_script_run_ctx
 
 from ingest import ingest, append_qa_to_store, save_store, log_conversation
-from rag_chain import build_chain, ask
+from rag_chain import build_chain
 from config import GROQ_API_KEY
 
 # ── Page config ───────────────────────────────────────────────────────────────
