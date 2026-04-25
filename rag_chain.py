@@ -8,7 +8,7 @@ import os
 
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferWindowMemory
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_groq import ChatGroq
 
 from config import GROQ_MODEL, TOP_K, GROQ_API_KEY
